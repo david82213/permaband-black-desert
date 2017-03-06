@@ -9,7 +9,14 @@ class App extends React.Component {
   }
 
   update(e){
-    this.setState( {count: e.target.value} )
+    this.setState({
+      // count: e.target.value
+      // count: this.refs.count.value,
+      count: this.count.refs.count.value,
+      person: this.count.refs.person.value,
+    })
+
+    console.log(this.state.count, this.state.person);
   }
 
   render() {
@@ -17,16 +24,27 @@ class App extends React.Component {
     return (
       <div>
         <h1>Welcome to PermaBand! We have {this.state.count} guild mates</h1>
+        <h3>Updated by {this.state.person}</h3>
         {/* <input type="number" onChange={this.update.bind(this)} /> */}
-        <Counter update={this.update.bind(this)} />
+        <Counter ref={component=> this.count = component} update={this.update.bind(this)} />
       </div>
     )
   }
 }
 
 // const App = () => <h1>Welcome to PermaBand</h1>
-const Counter = (props) =>
-  <input type="number" onChange={props.update} />
+// const Counter = (props) => (
+class Counter extends React.Component {
+  render(){
+    return (
+      <div>
+        {/* <input type="number" onChange={props.update} /> */}
+        <input ref="count" type="number" onChange={this.props.update} />
+        <input ref="person" type="text" onChange={this.props.update} />
+      </div>
+    )
+  }
+}
 
 App.propTypes = {
   // count: React.PropTypes.number.isRequired
